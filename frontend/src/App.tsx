@@ -1,10 +1,12 @@
-import WelcomeMessage from './components/WelcomeMessage'
+import FormularioRegistro from './components/FormularioRegistro'
+import MensajeBienvenida from './components/MensajeBienvenida'
 import './App.css'
 
 function App() {
   return (
     <main className="welcome-page">
-      <WelcomeMessage />
+      <MensajeBienvenida />
+      <FormularioRegistro />
     </main>
   )
 }

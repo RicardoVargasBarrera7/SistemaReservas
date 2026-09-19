@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function WelcomeMessage() {
+function MensajeBienvenida() {
   const [isInfoVisible, setIsInfoVisible] = useState(false)
 
   return (
@@ -26,4 +26,4 @@ function WelcomeMessage() {
   )
 }
 
-export default WelcomeMessage
+export default MensajeBienvenida
