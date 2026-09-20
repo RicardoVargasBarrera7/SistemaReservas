@@ -22,7 +22,11 @@ function validarInicioSesion(datos: DatosInicioSesion): ErroresInicioSesion {
   return errores
 }
 
-function FormularioInicioSesion() {
+type FormularioInicioSesionProps = {
+  onCrearCuenta: () => void
+}
+
+function FormularioInicioSesion({ onCrearCuenta }: FormularioInicioSesionProps) {
   const [datos, setDatos] = useState<DatosInicioSesion>(datosIniciales)
   const [errores, setErrores] = useState<ErroresInicioSesion>({})
   const [mensaje, setMensaje] = useState('')
@@ -101,7 +105,7 @@ function FormularioInicioSesion() {
       </form>
 
       {mensaje && <p className="mt-4 rounded-lg bg-slate-100 px-3 py-2 text-center text-xs font-semibold text-slate-700" role="status">{mensaje}</p>}
-      <p className="mt-7 text-center text-sm text-slate-500">¿No tienes una cuenta? <a className="font-bold text-green-700 underline decoration-green-200 underline-offset-4 transition hover:text-green-900" href="#registro">Crear cuenta</a></p>
+      <p className="mt-7 text-center text-sm text-slate-500">¿No tienes una cuenta? <button type="button" onClick={onCrearCuenta} className="font-bold text-green-700 underline decoration-green-200 underline-offset-4 transition hover:text-green-900">Crear cuenta</button></p>
     </section>
   )
 }

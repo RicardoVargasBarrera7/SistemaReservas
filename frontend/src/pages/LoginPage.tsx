@@ -14,7 +14,11 @@ const beneficios: BeneficioProps[] = [
   { icono: UsersRound, titulo: 'Canchas de calidad', descripcion: 'Siempre disponibles' },
 ]
 
-function LoginPage() {
+type LoginPageProps = {
+  onCrearCuenta: () => void
+}
+
+function LoginPage({ onCrearCuenta }: LoginPageProps) {
   return (
     <main className="flex min-h-screen flex-col bg-slate-50 lg:flex-row">
       <section
@@ -67,7 +71,7 @@ function LoginPage() {
       </section>
 
       <section className="flex min-w-0 flex-1 flex-col justify-center bg-slate-50 px-6 py-12 sm:px-12 lg:min-w-[440px] lg:px-[7%]">
-        <FormularioInicioSesion />
+        <FormularioInicioSesion onCrearCuenta={onCrearCuenta} />
         <p className="mt-10 text-center text-[10px] font-medium tracking-wide text-slate-400 lg:text-right">Fútbol &nbsp;·&nbsp; Deporte &nbsp;·&nbsp; Comunidad</p>
       </section>
     </main>
