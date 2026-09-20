@@ -1,66 +1,17 @@
+@import 'tailwindcss';
+
 :root {
-  --text: #71808b;
-  --text-h: #10202d;
-  --bg: #f1f5f5;
-  --panel: #ffffff;
-  --border: #dce4e7;
-  --accent: #08613e;
-  --accent-dark: #064a30;
-  --accent-soft: #b8e5c9;
-  --shadow: 0 16px 34px rgba(34, 56, 66, 0.12);
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 16px/145% var(--sans);
-  letter-spacing: 0;
-  color-scheme: light;
-  color: var(--text);
-  background: var(--bg);
+  font-family: 'Segoe UI', sans-serif;
+  color: #71808b;
+  background: #f1f5f5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-#root {
-  max-width: 100%;
-  margin: 0 auto;
-  min-height: 100svh;
-  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: 0;
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
 }
 
