@@ -24,9 +24,10 @@ function validarInicioSesion(datos: DatosInicioSesion): ErroresInicioSesion {
 
 type FormularioInicioSesionProps = {
   onCrearCuenta: () => void
+  onRecuperarContrasena: () => void
 }
 
-function FormularioInicioSesion({ onCrearCuenta }: FormularioInicioSesionProps) {
+function FormularioInicioSesion({ onCrearCuenta, onRecuperarContrasena }: FormularioInicioSesionProps) {
   const [datos, setDatos] = useState<DatosInicioSesion>(datosIniciales)
   const [errores, setErrores] = useState<ErroresInicioSesion>({})
   const [mensaje, setMensaje] = useState('')
@@ -75,7 +76,7 @@ function FormularioInicioSesion({ onCrearCuenta }: FormularioInicioSesionProps) 
             <Mail size={18} className="shrink-0 text-slate-400 group-focus-within:text-green-700" aria-hidden="true" />
             <input id="correo" name="correo" type="email" value={datos.correo} onChange={manejarCambio} autoComplete="email" placeholder="tu@correo.com" className="min-w-0 flex-1 border-0 bg-transparent py-3.5 text-sm text-slate-900 outline-none placeholder:text-slate-300" />
           </div>
-          {errores.correo && <p className="mt-1.5 text-xs font-semibold text-red-700" role="alert">{errores.correo}</p>}
+          <p className="mt-1.5 min-h-[18px] text-xs font-semibold text-red-700" role="alert">{errores.correo ?? ''}</p>
         </div>
 
         <div>
@@ -87,7 +88,7 @@ function FormularioInicioSesion({ onCrearCuenta }: FormularioInicioSesionProps) 
               {mostrarContrasena ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
-          {errores.contrasena && <p className="mt-1.5 text-xs font-semibold text-red-700" role="alert">{errores.contrasena}</p>}
+          <p className="mt-1.5 min-h-[18px] text-xs font-semibold text-red-700" role="alert">{errores.contrasena ?? ''}</p>
         </div>
 
         <div className="flex items-center justify-between gap-3 text-xs">
@@ -95,7 +96,7 @@ function FormularioInicioSesion({ onCrearCuenta }: FormularioInicioSesionProps) 
             <input id="recordarme" type="checkbox" checked={recordarme} onChange={(event) => setRecordarme(event.target.checked)} className="h-4 w-4 rounded border-slate-300 accent-green-700" />
             <span>Recordarme</span>
           </label>
-          <a href="#recuperar" className="font-semibold text-green-700 transition hover:text-green-900">¿Olvidaste tu contraseña?</a>
+          <button type="button" onClick={onRecuperarContrasena} className="font-semibold text-green-700 transition hover:text-green-900">¿Olvidaste tu contraseña?</button>
         </div>
 
         <button type="submit" className="mt-1 flex items-center justify-center rounded-xl bg-[#0B7A3B] p-3.5 font-bold text-white shadow-[0_8px_18px_rgba(11,122,59,0.18)] transition hover:bg-green-800 hover:shadow-[0_10px_22px_rgba(11,122,59,0.25)] active:translate-y-px focus:outline-none focus:ring-4 focus:ring-green-200">
@@ -104,7 +105,9 @@ function FormularioInicioSesion({ onCrearCuenta }: FormularioInicioSesionProps) 
         </button>
       </form>
 
-      {mensaje && <p className="mt-4 rounded-lg bg-slate-100 px-3 py-2 text-center text-xs font-semibold text-slate-700" role="status">{mensaje}</p>}
+      <div className="mt-4 min-h-[32px]">
+        {mensaje && <p className="rounded-lg bg-slate-100 px-3 py-2 text-center text-xs font-semibold text-slate-700" role="status">{mensaje}</p>}
+      </div>
       <p className="mt-7 text-center text-sm text-slate-500">¿No tienes una cuenta? <button type="button" onClick={onCrearCuenta} className="font-bold text-green-700 underline decoration-green-200 underline-offset-4 transition hover:text-green-900">Crear cuenta</button></p>
     </section>
   )
