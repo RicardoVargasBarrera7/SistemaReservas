@@ -24,8 +24,6 @@ function LoginPage() {
         }}
         aria-label="Información del sistema"
       >
-        <div className="pointer-events-none absolute inset-0 -z-10 opacity-30 [background:linear-gradient(90deg,transparent_49.8%,rgba(255,255,255,.2)_50%,transparent_50.2%),linear-gradient(0deg,transparent_49.8%,rgba(255,255,255,.16)_50%,transparent_50.2%)] [background-size:100%_100%,100%_100%]" />
-        <div className="pointer-events-none absolute -bottom-40 -right-40 -z-10 h-[32rem] w-[32rem] rounded-full border border-green-300/20" />
 
         <div className="relative z-10 flex items-center gap-3">
           <div className="grid h-12 w-11 place-items-center rounded-[14px_14px_18px_18px] border border-white/70 bg-black/10 shadow-lg backdrop-blur-sm">

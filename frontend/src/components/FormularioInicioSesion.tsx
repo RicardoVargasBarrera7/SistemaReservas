@@ -61,7 +61,7 @@ function FormularioInicioSesion() {
       </div>
 
       <p className="mb-2 text-xs font-bold uppercase tracking-[2px] text-green-700">Iniciar sesión</p>
-      <h2 className="m-0 text-[clamp(2rem,4vw,2.5rem)] font-extrabold leading-tight tracking-tight text-slate-900">Bienvenido de nuevo.</h2>
+      <h2 className="m-0 text-[clamp(2rem,4vw,2.5rem)] font-extrabold leading-tight tracking-tight text-slate-900">Bienvenido de nuevo</h2>
       <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-base">Ingresa a tu cuenta para gestionar tus reservas.</p>
 
       <form className="mt-8 grid gap-5" onSubmit={manejarEnvio} noValidate>
