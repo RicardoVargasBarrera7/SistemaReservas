@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 :root {
-  font-family: 'Segoe UI', sans-serif;
-  color: #71808b;
-  background: #f1f5f5;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  color: #64748b;
+  background: #f8fafc;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
