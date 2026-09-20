@@ -1,6 +1,7 @@
 import { Eye, EyeOff, LockKeyhole, Mail, UserRound, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
+import { registrarUsuario } from '../services/authService'
 
 type DatosRegistro = {
   nombre: string
@@ -62,6 +63,7 @@ function FormularioRegistro({ onIniciarSesion }: { onIniciarSesion: () => void }
   const [datos, setDatos] = useState<DatosRegistro>(datosIniciales)
   const [errores, setErrores] = useState<ErroresRegistro>({})
   const [mensaje, setMensaje] = useState('')
+  const [estaEnviando, setEstaEnviando] = useState(false)
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false)
 
@@ -71,7 +73,7 @@ function FormularioRegistro({ onIniciarSesion }: { onIniciarSesion: () => void }
     if (errores[name as keyof DatosRegistro]) setErrores((actuales) => ({ ...actuales, [name]: undefined }))
   }
 
-  function manejarEnvio(event: FormEvent<HTMLFormElement>) {
+  async function manejarEnvio(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const erroresDeValidacion = validarRegistro(datos)
     setErrores(erroresDeValidacion)
@@ -79,7 +81,26 @@ function FormularioRegistro({ onIniciarSesion }: { onIniciarSesion: () => void }
       setMensaje('Revisa los campos marcados antes de continuar.')
       return
     }
-    setMensaje('Cuenta válida. El registro se enviará a la API en el siguiente paso.')
+    setEstaEnviando(true)
+
+    try {
+      const respuesta = await registrarUsuario({
+        nombre: datos.nombre,
+        apellido: datos.apellido,
+        correo: datos.correo,
+        contrasena: datos.contrasena,
+      })
+
+      setMensaje(respuesta.mensaje ?? 'Cuenta creada correctamente.')
+    } catch (error: unknown) {
+      const mensajeError = error instanceof Error
+        ? error.message
+        : 'No se pudo completar el registro.'
+
+      setMensaje(mensajeError)
+    } finally {
+      setEstaEnviando(false)
+    }
   }
 
   const seguridad = datos.contrasena.length >= 12 ? 'fuerte' : datos.contrasena.length >= 8 ? 'media' : 'inicial'
@@ -122,7 +143,7 @@ function FormularioRegistro({ onIniciarSesion }: { onIniciarSesion: () => void }
         </div>
 
         <div className="flex items-center gap-3 text-[11px] text-slate-500"><span>Seguridad de la contraseña:</span><span className="h-1.5 flex-1 rounded-full bg-slate-200"><span className={`block h-full w-1/3 rounded-full ${colorSeguridad}`} /></span><span>Mínimo 8 caracteres</span></div>
-        <button type="submit" className="mt-1 flex items-center justify-center rounded-xl bg-[#0B7A3B] p-3.5 font-bold text-white shadow-[0_8px_18px_rgba(11,122,59,0.18)] transition hover:bg-green-800 active:translate-y-px focus:outline-none focus:ring-4 focus:ring-green-200"><UserPlus size={19} className="mr-2" aria-hidden="true" />Crear cuenta</button>
+        <button type="submit" disabled={estaEnviando} className="mt-1 flex items-center justify-center rounded-xl bg-[#0B7A3B] p-3.5 font-bold text-white shadow-[0_8px_18px_rgba(11,122,59,0.18)] transition hover:bg-green-800 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-4 focus:ring-green-200"><UserPlus size={19} className="mr-2" aria-hidden="true" />{estaEnviando ? 'Creando cuenta...' : 'Crear cuenta'}</button>
       </form>
 
       <div className="mt-3 min-h-[32px]">

@@ -1,6 +1,7 @@
 import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
+import { iniciarSesion } from '../services/authService'
 
 type DatosInicioSesion = {
   correo: string
@@ -33,6 +34,7 @@ function FormularioInicioSesion({ onCrearCuenta, onRecuperarContrasena }: Formul
   const [mensaje, setMensaje] = useState('')
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
   const [recordarme, setRecordarme] = useState(false)
+  const [estaEnviando, setEstaEnviando] = useState(false)
 
   function manejarCambio(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -42,7 +44,7 @@ function FormularioInicioSesion({ onCrearCuenta, onRecuperarContrasena }: Formul
     }
   }
 
-  function manejarEnvio(event: FormEvent<HTMLFormElement>) {
+  async function manejarEnvio(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const erroresDeValidacion = validarInicioSesion(datos)
     setErrores(erroresDeValidacion)
@@ -52,7 +54,16 @@ function FormularioInicioSesion({ onCrearCuenta, onRecuperarContrasena }: Formul
       return
     }
 
-    setMensaje('Formulario válido. La comprobación de credenciales se realizará con la API.')
+    setEstaEnviando(true)
+
+    try {
+      const respuesta = await iniciarSesion(datos)
+      setMensaje(respuesta.mensaje ?? 'Inicio de sesión correcto.')
+    } catch (error: unknown) {
+      setMensaje(error instanceof Error ? error.message : 'No se pudo iniciar sesión.')
+    } finally {
+      setEstaEnviando(false)
+    }
   }
 
   return (
@@ -99,9 +110,9 @@ function FormularioInicioSesion({ onCrearCuenta, onRecuperarContrasena }: Formul
           <button type="button" onClick={onRecuperarContrasena} className="font-semibold text-green-700 transition hover:text-green-900">¿Olvidaste tu contraseña?</button>
         </div>
 
-        <button type="submit" className="mt-1 flex items-center justify-center rounded-xl bg-[#0B7A3B] p-3.5 font-bold text-white shadow-[0_8px_18px_rgba(11,122,59,0.18)] transition hover:bg-green-800 hover:shadow-[0_10px_22px_rgba(11,122,59,0.25)] active:translate-y-px focus:outline-none focus:ring-4 focus:ring-green-200">
+        <button type="submit" disabled={estaEnviando} className="mt-1 flex items-center justify-center rounded-xl bg-[#0B7A3B] p-3.5 font-bold text-white shadow-[0_8px_18px_rgba(11,122,59,0.18)] transition hover:bg-green-800 hover:shadow-[0_10px_22px_rgba(11,122,59,0.25)] active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-4 focus:ring-green-200">
           <ArrowRight size={20} className="mr-2" aria-hidden="true" />
-          Iniciar sesión
+          {estaEnviando ? 'Comprobando...' : 'Iniciar sesión'}
         </button>
       </form>
 
